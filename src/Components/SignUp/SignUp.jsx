@@ -3,8 +3,21 @@ import signUpImg from '../../assets/others/authentication2.png';
 import signUpBg from '../../assets/others/authentication.png'
 import { Link } from 'react-router-dom';
 import SocialLogin from '../Login/SocialLogIn/SocialLogin';
+import { useForm } from 'react-hook-form';
 
 const SignUp = () => {
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+      } = useForm();
+    
+      const onSubmit = (data) => {
+        console.log(data);
+    };
+
     return (
         <section  style={{
             backgroundImage: `url('${signUpBg}')`,
@@ -18,16 +31,22 @@ const SignUp = () => {
             
             <div className="w-[400px] flex flex-col justify-center px-6 text-center rounded-sm lg:max-w-md xl:max-w-lg lg:text-left ">
     
-                <form >
+                <form onSubmit={handleSubmit(onSubmit)}>
                 <h1 className='text-5xl font-extrabold text-center '>Sign Up</h1>
+                <div className="mb-6">
+                  
+                  <label className="block mb-2 text-sm font-light text-[#444] dark:text-white">Name</label>
+                  <input type="email" {...register("name")} name="name" className="shadow-sm rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm  block w-full p-2.5  dark:shadow-sm-light" placeholder="Name" required />
+              </div>
                     <div className="mb-6">
                   
                         <label className="block mb-2 text-sm font-light text-[#444] dark:text-white">Email</label>
-                        <input type="email" name="email" className="shadow-sm rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="email" required />
+                        <input type="email" {...register ("email", { required: true })} name="email" className="shadow-sm rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm  block w-full p-2.5  dark:shadow-sm-light" placeholder="email" required />
+                        {errors.email && <span className='text-red-700 my-2'>This field is required</span>}
                     </div>
                     <div className="mb-6">
                         <label className="block mb-2 text-sm font-light text-gray-900 dark:text-white">Password</label>
-                        <input type="password" name="password" className="shadow-sm bg-gray-50 border rounded border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="password" required />
+                        <input type="password" {...register("password")} name="password" className="shadow-sm bg-gray-50 border rounded border-gray-300 text-gray-900 text-sm  block w-full p-2.5  dark:placeholder-gray-400 dark:text-white  dark:shadow-sm-light" placeholder="password" required />
                         {/* {
                             error ? <p className="p-2 text-red-800">{error}</p> : ''
                         } */}
@@ -35,17 +54,14 @@ const SignUp = () => {
                     <div className="mb-6">
                   
                  
-                  <input type="email" name="email" className="shadow-sm rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="capcha" required />
+                  <input type="email" name="email" className="shadow-sm rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm  block w-full p-2.5  dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light" placeholder="capcha" required />
               </div>
               <div className="mb-6">
                   
                   
-                  <input type="email" name="email" className="shadow-sm rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="type here" required />
+                  <input type="email" name="email" className="shadow-sm rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm   block w-full p-2.5  dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light" placeholder="type here" required />
               </div>
     
-    
-    
-                    
     
                     <div className="text-center mt-12 ">
                         <button type="submit" className=" w-full rounded text-white bg-[#D1A054B3] hover:bg-[#D1A054B3] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  text-sm px-5 py-2.5 text-center dark:bg-[#D1A054B3] dark:hover:bg-[#D1A054B3] ">Sign In</button>
