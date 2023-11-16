@@ -1,16 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './style.css'
 import loginImg from '../../assets/others/authentication2.png';
 import loginBg from '../../assets/others/authentication.png'
 import SocialLogin from './SocialLogIn/SocialLogin';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import toast from 'react-hot-toast';
+import { AuthContext } from '../../Auth/AuthProvider/AuthProvider';
 
 const Login = () => {
 
     const capcha = useRef(null);
     const [disabled, setDisabled] = useState(true);
+    const {signIn} = useContext(AuthContext);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || "/";
+
 
     useEffect(()=>{
         loadCaptchaEnginge(6); 
@@ -35,6 +43,16 @@ const Login = () => {
         const password = form.password.value;
 
         console.log(email, password);
+
+        signIn(email, password)
+        .then(result=>{
+            toast.success('Logged in successfully')
+            navigate(from, { replace: true });
+
+        })
+        .then(error=>{
+            console.log(error);
+        })
 
     }
 
@@ -76,8 +94,8 @@ const Login = () => {
                   <LoadCanvasTemplate />
                   </label>
 
-                  <input type="text" ref={capcha} name="capcha" className="shadow-sm rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm  block w-full p-2.5  dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light" placeholder="type here" required />
-                  <button onClick={handleValidate} className="btn btn-outline w-full btn-xs my-2">Validate</button>
+                  <input onBlur={handleValidate} type="text" ref={capcha} name="capcha" className="shadow-sm rounded bg-gray-50 border border-gray-300 text-gray-900 text-sm  block w-full p-2.5  dark:placeholder-gray-400 dark:text-white dark:shadow-sm-light" placeholder="type here" required />
+                  
               </div>
     
                     <div className="text-center mt-12 ">

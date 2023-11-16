@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import '../../../../../index.css'
+import { AuthContext } from '../../../../../Auth/AuthProvider/AuthProvider';
+
 
 const NavBar = () => {
+
+  const {user, logOut} = useContext(AuthContext);
+  
+  const handleLogout =()=>{
+        return logOut()
+           
+  }
+
  const links = <>
  
     <NavLink to={'/'} className='mr-3'><li>HOME</li></NavLink>
@@ -10,13 +20,13 @@ const NavBar = () => {
     <NavLink className='mr-3'><li>DASHBOARD</li></NavLink>
     <NavLink to={'/menu'} className='mr-3'><li>OUR MENU</li></NavLink>
     <NavLink to={'/ourShop/salad'} className='mr-3'><li>OUR SHOP</li></NavLink>
-    <NavLink to={'/login'} className='mr-3'><li>OUR SHOP</li></NavLink>
+    <NavLink to={'/secret'} className='mr-3'><li>Secret</li></NavLink>
  
  </>
 
     return (
         <div>
-            <div className="navbar fixed z-10 opacity-80 bg-black-300 text-white max-w-screen-xl px-10">
+            <div className="navbar fixed z-10 opacity-75 bg-black text-white max-w-screen-xl px-10">
   <div className="navbar-start">
     <div className="dropdown">
       <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -40,9 +50,24 @@ const NavBar = () => {
   </div>
   
   <div className="navbar-end">
-  <Link to={'/login'}>
-    <button className="text-[#BB8506] bg-[#E8E8E8] rounded border-b-2 border-b-[#BB8506] px-10 py-2">Login</button>
-    </Link>
+
+  {user ? (
+                    <div className="dropdown dropdown-end">
+                        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                            <div className="w-10 rounded-full">
+                                <img src={user.photoURL} alt="user avatar" />
+                            </div>
+                        </label>
+                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-base-100 rounded-box w-52">
+                            <li className="font-bold ml-3">{user.displayName}</li>
+                            <li><a onClick={handleLogout}>Logout</a></li>
+                        </ul>
+                    </div>
+                ) : (
+                        <Link to={'/login'}>
+                            <button className="text-[#BB8506] bg-[#E8E8E8] rounded border-b-2 border-b-[#BB8506] px-10 py-2">Login</button>
+                        </Link>
+                    )} 
   </div>
 </div>
         </div>
