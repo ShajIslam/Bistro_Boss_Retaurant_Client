@@ -15,7 +15,6 @@ import ButtonType from '../Home/Home/Shared/ButtonType/ButtonType';
 const Menu = () => {
     const [menu] = UseMenu();
 
-    console.log(menu);
 
     const dessert = menu.filter(item => item.category === 'dessert')
     const pizza = menu.filter(item => item.category === 'pizza')

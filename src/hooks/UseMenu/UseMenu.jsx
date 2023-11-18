@@ -1,3 +1,4 @@
+import { data } from "autoprefixer";
 import { useEffect, useState } from "react";
 
 
@@ -14,7 +15,7 @@ const UseMenu = () => {
             setLoading(false)
         })
 
-    })
+    },[data])
 
     return [menu];
 };

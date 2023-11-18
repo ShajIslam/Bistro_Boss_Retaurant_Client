@@ -1,15 +1,18 @@
 import React, { useContext } from 'react';
 import signUpImg from '../../assets/others/authentication2.png';
 import signUpBg from '../../assets/others/authentication.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SocialLogin from '../Login/SocialLogIn/SocialLogin';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../Auth/AuthProvider/AuthProvider';
 import { toast } from 'react-hot-toast';
 import { Helmet } from 'react-helmet';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const SignUp = () => {
-    const {createUser} = useContext(AuthContext);
+    const {createUser, updateUserProfile} = useContext(AuthContext);
+    const axiosPublic = useAxiosPublic();
+    const navigate = useNavigate();
 
 
     const {
@@ -23,11 +26,22 @@ const SignUp = () => {
         console.log(data);
         createUser(data.email, data.password)
         .then(result =>{
-            toast.success('Successfully Signed Up, Go to Login')
+            updateUserProfile(data.name, data.photoURL)
+            
         })
-        .catch(error=>{
-            console.log(error.message);
-            toast.error('Something wrong please try again')
+        .then(()=>{
+            const userInfo ={
+                name: data.name,
+                email: data.email
+            }
+            axiosPublic.post('/users', userInfo)
+            .then(res=>{
+                if(res.data.insertedId){
+                    toast.success('Successfully Signed Up, Go to Login');
+                }
+                navigate('/');
+                
+            })
         })
     };
 

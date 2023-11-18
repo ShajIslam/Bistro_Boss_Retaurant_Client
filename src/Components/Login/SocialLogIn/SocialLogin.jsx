@@ -2,14 +2,22 @@
 import { GrFacebookOption } from 'react-icons/gr';
 import { AiOutlineGoogle } from "react-icons/ai";
 import { AiOutlineGithub } from "react-icons/ai";
+import { useContext } from 'react';
+import { AuthContext } from '../../../Auth/AuthProvider/AuthProvider';
 
 const SocialLogin = () => {
+    const {googleSignIn} = useContext(AuthContext);
+
+    const handleGoogleSignIn = ()=>{
+        return googleSignIn();
+    }
+
     return (
         <div>
             <div className=" custom-gradient ">
     
     <div className="flex mt-4 space-x-5 sm:justify-center md:mt-0">
-        <button  className='text-2xl w-9 h-9 rounded-full border border-gray-900'>
+        <button onClick={handleGoogleSignIn}  className='text-2xl w-9 h-9 rounded-full border border-gray-900'>
              
                 <AiOutlineGoogle className='ml-1'></AiOutlineGoogle>
 

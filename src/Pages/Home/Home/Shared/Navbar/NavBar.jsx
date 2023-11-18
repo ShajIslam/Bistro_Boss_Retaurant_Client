@@ -2,11 +2,15 @@ import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import '../../../../../index.css'
 import { AuthContext } from '../../../../../Auth/AuthProvider/AuthProvider';
-
+import { TiShoppingCart } from "react-icons/ti";
+import { FaShoppingCart } from "react-icons/fa";
+import useCart from '../../../../../hooks/useCart';
 
 const NavBar = () => {
 
   const {user, logOut} = useContext(AuthContext);
+  const [cart] = useCart();
+
   
   const handleLogout =()=>{
         return logOut()
@@ -16,11 +20,17 @@ const NavBar = () => {
  const links = <>
  
     <NavLink to={'/'} className='mr-3'><li>HOME</li></NavLink>
-    <NavLink className='mr-3'><li>CONTACT US</li></NavLink>
-    <NavLink className='mr-3'><li>DASHBOARD</li></NavLink>
-    <NavLink to={'/menu'} className='mr-3'><li>OUR MENU</li></NavLink>
-    <NavLink to={'/ourShop/salad'} className='mr-3'><li>OUR SHOP</li></NavLink>
-    <NavLink to={'/secret'} className='mr-3'><li>Secret</li></NavLink>
+    {/* <NavLink className='mr-3'><li>CONTACT US</li></NavLink>
+    <NavLink className='mr-3'><li>DASHBOARD</li></NavLink> */}
+    <NavLink to={'/menu'} className='mr-3'><li>MENU</li></NavLink>
+    <NavLink to={'/ourShop/salad'} className='mr-3'><li>SHOP</li></NavLink>
+   <NavLink to={'/dashboard/cart'}>
+   <div className="indicator mr-7">
+  <span className="indicator-item badge badge-secondary bg-red-700">+{cart.length}</span> 
+  <FaShoppingCart className='text-2xl mr-2'></FaShoppingCart>
+</div>
+   </NavLink>
+    {/* <NavLink to={'/secret'} className='mr-3'><li>Secret</li></NavLink> */}
  
  </>
 
@@ -41,6 +51,9 @@ const NavBar = () => {
     <a className="btn btn-ghost normal-case text-xl">BISTRO BOSS</a>
 
   </div>
+  
+  
+  <div className="navbar-end">
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
       {
@@ -48,8 +61,6 @@ const NavBar = () => {
       }
     </ul>
   </div>
-  
-  <div className="navbar-end">
 
   {user ? (
                     <div className="dropdown dropdown-end">
