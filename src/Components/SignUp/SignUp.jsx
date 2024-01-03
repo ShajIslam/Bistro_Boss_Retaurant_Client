@@ -27,7 +27,7 @@ const SignUp = () => {
         createUser(data.email, data.password)
         .then(result =>{
             updateUserProfile(data.name, data.photoURL)
-            
+           
         })
         .then(()=>{
             const userInfo ={
@@ -37,10 +37,10 @@ const SignUp = () => {
             axiosPublic.post('/users', userInfo)
             .then(res=>{
                 if(res.data.insertedId){
-                    toast.success('Successfully Signed Up, Go to Login');
+                    toast.success('Successfully Signed Up!');
+                    navigate('/');
                 }
-                navigate('/');
-                
+               
             })
         })
     };

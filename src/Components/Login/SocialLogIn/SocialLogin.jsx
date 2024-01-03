@@ -4,12 +4,16 @@ import { AiOutlineGoogle } from "react-icons/ai";
 import { AiOutlineGithub } from "react-icons/ai";
 import { useContext } from 'react';
 import { AuthContext } from '../../../Auth/AuthProvider/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 const SocialLogin = () => {
     const {googleSignIn} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handleGoogleSignIn = ()=>{
-        return googleSignIn();
+       googleSignIn();
+       navigate('/');
+
     }
 
     return (

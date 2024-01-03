@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import res from '../../assets/restuarant.png'
-import { FaCalendar, FaHome, FaShoppingBag, FaShoppingCart, FaWallet } from 'react-icons/fa';
+import { FaCalendar, FaHome, FaShoppingBag, FaShoppingCart, FaUser, FaWallet } from 'react-icons/fa';
 import { MdReviews } from "react-icons/md";
 import { LuCalendarSearch } from "react-icons/lu";
 import { AiFillContacts, AiOutlineMenu } from 'react-icons/ai';
@@ -42,6 +42,11 @@ const Dashboard = () => {
                         <NavLink className='text-md flex items-center'>
                             <LuCalendarSearch className='mr-3 text-2xl'></LuCalendarSearch>
                             ONLINE BOOKINGS</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to={'/dashboard/users'} className='text-md flex items-center'>
+                            <FaUser className='mr-3 text-2xl'></FaUser>
+                            ALL USERS</NavLink>
                     </li>
                 </ul>
                 <hr />
